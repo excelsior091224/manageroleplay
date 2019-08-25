@@ -7,8 +7,8 @@ token = os.environ["DISCORD_BOT_TOKEN"]
 global user_id
 global text_channel
 
-user_id = os.environ["USER_ID"]
-text_channel = os.environ["DISCORD_MAIN_CHANNEL"]
+user_id = int(os.environ["USER_ID"])
+text_channel = int(os.environ["DISCORD_MAIN_CHANNEL"])
 
 # 空白で区切られたメッセージのn番目を取り出す
 def command(message, n=0):
