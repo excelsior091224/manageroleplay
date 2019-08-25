@@ -3,8 +3,6 @@ import discord, traceback, random, re, os
 EMBED_COLOR = 0x2ECC69
 
 token = os.environ["DISCORD_BOT_TOKEN"]
-text_channel = os.environ["DISCORD_MAIN_CHANNEL"]
-user_id = os.environ["USER_ID"]
 
 # 空白で区切られたメッセージのn番目を取り出す
 def command(message, n=0):
@@ -15,7 +13,7 @@ def command(message, n=0):
 
 class MyClient(discord.Client):
     async def send2developer(self, msg):
-        developer = self.get_user(user_id)
+        developer = self.get_user(os.environ["USER_ID"])
         dm = await developer.create_dm()
         await dm.send(msg)
 
@@ -28,7 +26,7 @@ class MyClient(discord.Client):
     async def on_member_update(self, before, after):
         if before.status != after.status:
             msg = after.display_name + " さんが " + str(after.status) + " になりました"
-            await self.get_channel(text_channel).send(msg)
+            await self.get_channel(os.environ["DISCORD_MAIN_CHANNEL"]).send(msg)
 
     #ダイス
     # メッセージを受信するごとに実行される
