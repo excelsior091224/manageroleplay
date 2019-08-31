@@ -1,4 +1,5 @@
 import discord, traceback, random, re, os
+from datetime import datetime
 
 EMBED_COLOR = 0x2ECC69
 
@@ -31,7 +32,8 @@ class MyClient(discord.Client):
     #メンバーのステータスが変わったら通知する処理
     async def on_member_update(self, before, after):
         if before.status != after.status:
-            msg = after.display_name + " さんが " + str(after.status) + " になりました"
+            time = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
+            msg = time + " " + after.display_name + " さんが " + str(after.status) + " になりました"
             await self.get_channel(text_channel).send(msg)
 
     #ダイス
