@@ -32,7 +32,7 @@ class MyClient(discord.Client):
     #メンバーのステータスが変わったら通知する処理
     async def on_member_update(self, before, after):
         if before.status != after.status:
-            time = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
+            time = str(datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
             msg = time + " " + after.display_name + " さんが " + str(after.status) + " になりました"
             await self.get_channel(text_channel).send(msg)
 
