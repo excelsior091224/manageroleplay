@@ -1,5 +1,5 @@
 import discord, traceback, random, re, os
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 EMBED_COLOR = 0x2ECC69
 
@@ -10,6 +10,8 @@ global text_channel
 
 user_id = int(os.environ["USER_ID"])
 text_channel = int(os.environ["DISCORD_MAIN_CHANNEL"])
+
+JST = timezone(timedelta(hours=+9), 'JST')
 
 # 空白で区切られたメッセージのn番目を取り出す
 def command(message, n=0):
@@ -32,7 +34,7 @@ class MyClient(discord.Client):
     #メンバーのステータスが変わったら通知する処理
     async def on_member_update(self, before, after):
         if before.status != after.status:
-            time = str(datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
+            time = str(datetime.now(JST).strftime("%Y/%m/%d %H:%M:%S"))
             msg = time + " " + after.display_name + " さんが " + str(after.status) + " になりました"
             await self.get_channel(text_channel).send(msg)
 
